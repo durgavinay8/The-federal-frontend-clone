@@ -1,0 +1,65 @@
+{
+    "urls":{
+      "company_img_reverse": ""
+    },
+    "texts":{
+      "company_desc": "The Federal is a digital platform disseminating news, analysis and commentary. It seeks to look at India from the perspective of the states with special focus on the south.",
+      "subscribe_desc":"Get news delivered to your in-box. Subscribe to our newsletter.",
+      "subscribe_text":"Subscribe",
+      "copyright": "© 2023 THE FEDERAL. ALL RIGHTS RESERVED. All Images, Videos and content are proprietary to Federal."
+    },
+    "social_media_links": [
+      "https://www.instagram.com/thefederal_india/reels/",
+      "https://www.facebook.com/TheFederal.India",
+      "https://twitter.com/i/flow/login?redirect_after_login=/TheFederal_IN",
+      "https://www.linkedin.com/company/thefederal?originalSubdomain=in",
+      "https://www.youtube.com/channel/UCY0hLvZl90ALbeaUMjKlsyw"
+    ],
+    "company_links":{
+      "urls": {
+        "about_us": "/about-us",
+        "contact_us": "/contact-us",
+        "careers": "/careers",
+        "premium_access": "/pricing",
+        "terms_of_use": "/terms",
+        "privacy_policy": "/privacy-policy"
+      },
+      "texts":{
+        "about_us": "About us",
+        "contact_us": "Contact us",
+        "careers": "Careers",
+        "premium_access": "Premium Access Subscription",
+        "terms_of_use": "Terms of Use",
+        "privacy_policy": "Privacy Policy"
+      }
+    },
+    "quick_links":{
+      "section_title" : "quick links",
+      "urls":{
+        "news": "/category/news/",
+        "analysis": "/category/analysis",
+        "states": "/category/states/",
+        "perspective": "/category/opinion/",
+        "videos": "/category/videos/",
+        "entertainment": "/category/entertainment/",
+        "sports": "/category/sports/",
+        "features": "/category/features",
+        "business": "/category/business",
+        "premium": "/category/the-eighth-column/",
+        "brand_studio": "/brand-studio"
+      },
+      "texts":{
+        "news": "News",
+        "analysis": "Analysis",
+        "states": "States",
+        "perspective": "Perspective",
+        "videos": "Videos",
+        "entertainment": "Entertainment",
+        "sports": "Sports",
+        "features": "Features",
+        "business": "Business",
+        "premium": "Premium",
+        "brand_studio": "Brand Studio"
+      }
+    }
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="../static/css/style-index.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+            integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+            integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css"
+            integrity="sha512-siarrzI1u3pCqFG2LEzi87McrBmq6Tp7juVsdmGY1Dr8Saw+ZBAzDzrGwX3vgxX1NkioYNCFOVC0GpDPss10zQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </head>
+    <body>
+        {% include 'header.html' %}
+        <main>
+            <div class="hero-section-container max-width flex-row level-1">
+                <div class="top-stories-card flex-column">
+                    <div class="main-story flex-row" id="main-story">
+                        <div class="data-box flex-column">
+                            <a href class="main-heading"
+                                id="top-stories-heading"></a>
+                            <a href class="title" id="main-story-title"></a>
+                            <a href class="short-text"></a>
+                        </div>
+                        <div class="image-container">
+                            <a href class="image">
+                                <img src alt="top-story-image">
+                            </a>
+                            <a href class="img-over_tag_btn"></a>
+                        </div>
+                    </div>
+                    <div class="flex-row" id="sub-top-stories-row"></div>
+                    <template id="sub-story-card-template">
+                        <div class="sub-story-card flex-column">
+                            <div class="image-container">
+                                <a href class="image">
+                                    <img src alt="top-story-image">
+                                </a>
+                                <a href class="img-over_tag_btn flex-row"></a>
+                            </div>
+                            <a href class="title"></a>
+                        </div>
+                    </template>
+                </div>
+                <div class="flex-column" id="whats-brewing">
+                    <a href class="main-heading"></a>
+                    <div class="flex-column" id="brewing-cards-cont"></div>
+                    <template id="brewing-card-template">
+                        <div class="brewing-card">
+                            <a href class="flex-row">
+                                <img src alt="image" class="brewing-img">
+                                <p class="short-text"></p>
+                            </a>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="level-2">
+                <div class="owl-carousel owl-theme" id="level2-carousel-cont"></div>
+                <template id="level2-card-template">
+                    <div class="carousel-card">
+                        <a href="">
+                            <img src="" alt="image">
+                        </a>
+                        <div class="data-box">
+                            <a href="" class="img-over_tag_btn flex-row"></a>
+                            <a href="" class="title"></a>
+                        </div>
+                    </div>
+                </template>
+                <div class="owl-theme">
+                    <div class="owl-controls">
+                        <div class="custom-nav owl-nav"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="level-3 flex-row multiVideo_sec max-width" id="multiVideo_sec"></div>
+            <template id="multiVideo_box_template">
+                <a href class="multiVideo_divBox flex-row">
+                    <img src alt="image">
+                    <p class="title"></p>
+                </a>
+            </template>
+
+            <div class="level-5 max-width">
+                <div class="nav flex-row">
+                    <a href class="main-heading"></a>
+                    <ul class="places flex-row">
+                        <!-- `<li class="category-based-on-place">${category}</li>` -->
+                    </ul>
+                </div>
+                <div class="state_of_nation_listBox_sec flex-row" id="state_of_nation_listBox_sec"></div>
+                <template id="son_card_template">
+                    <a href class="state_of_nation_article flex-column"
+                        id="son_card">
+                        <img src alt="image">
+                        <p class="title"></p>
+                        <span class="date_time"></span>
+                    </a>
+                </template>
+            </div>
+
+            <div class="level-6">
+                <div class="scroll-area-wrapper max-width flex-row" id="opinion-cards-cont"></div>
+                <template id="opinion-card-template">
+                    <div class="opinion-card flex-column">
+                        <a href class="author-img">
+                            <img src alt="image">
+                        </a>
+                        <a href class="title"></a>
+                        <a href class="author-name"></a>
+                    </div>
+                </template>
+            </div>
+
+            <div class="level-7 max-width flex-row">
+                <div class="left-section flex-column">
+                    <div class="fault-line-sec" id="faultline-sec">
+                        <div class="title-sec flex-row">
+                            <a href class="main-heading" id="faultline-heading"></a>
+                            <i
+                                class="fa-solid fa-arrow-up-right-from-square main-heading"></i>
+                        </div>
+                        <a href id="faultline-img">
+                            <img src alt="fautline-image">
+                        </a>
+                    </div>
+                    <div class="two-bit-sec" id="two-bit-sec">
+                        <div class="title-sec flex-row">
+                            <a href class="main-heading"></a>
+                            <i
+                                class="fa-solid fa-arrow-up-right-from-square main-heading"></i>
+                        </div>
+                        <a href id="two-bit-image">
+                            <img src alt="two-bit-image">
+                        </a>
+                    </div>
+                </div>
+                <div class="right-section flex-column" id="eight-column-sec">
+                    <div class="title-wrapper">
+                        <a href class="flex-row" id="eight-column-title">
+                            <img
+                                src="https://thefederal.com/theme_flamingo/images/icon_premium_reverce.png"
+                                alt="premium_icon">
+                            <span class="section_title"></span>
+                        </a>
+                    </div>
+                    <a href>
+                        <div class="title"></div>
+                        <p class="para-text"></p>
+                    </a>
+                    <a href>
+                        <span class="author-name"></span>
+                    </a>
+                    <a href>
+                        <img src alt="eight-column-image"
+                            class="eight-column-img" id="eight-column-img">
+                    </a>
+                </div>
+            </div>
+
+            <div class="level-8 flex-row max-width"></div>
+            <template id="l8_category_box_template">
+                <div class="category-div-box">
+                    <div class="title-sec flex-row">
+                        <a href class="main-heading"></a>
+                        <i
+                            class="fa-solid fa-arrow-up-right-from-square main-heading"></i>
+                    </div>
+                    <div class="owl-carousel owl-theme">
+                        <!-- <div class="carousel-card flex-column"></div> -->
+                    </div>
+                </div>
+            </template>
+            <template id="l8_article_card_template">
+                <a href class="article-card flex-row">
+                    <img src alt="images" class="article-image">
+                    <p class="article-title"></p>
+                </a>
+            </template>
+
+            <div class="level-9">
+                <div class="federal-playlist-wrapper max-width">
+                    <a href id="the-federal-playlist-heading">
+                        <span></span>
+                        <i
+                            class="fa-solid fa-arrow-up-right-from-square main-heading"></i>
+                    </a>
+                    <div class="federal-playlist-owl-carousel-wrapper">
+                        <div class="owl-carousel owl-theme" id="federal-playlist-carousel-cont"></div>
+                        <template id="federal-playlist-card-template">
+                            <a href class="carousel-card flex-column">
+                                <img src alt="playlist-image"
+                                    class="thumbnail">
+                                <p class="video-title"></p>
+                                <span class="date-time"></span>
+                            </a>
+                        </template>
+                        <div class="owl-theme">
+                            <div class="owl-controls">
+                                <div class="custom-nav owl-nav"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-heading">
+                        <span></span>
+                        <i
+                            class="fa-solid fa-arrow-up-right-from-square main-heading"></i>
+                    </div>
+                </div>
+            </div>
+        </main>
+        {% include 'footer.html' %}
+        <script src="../static/js/script-index.js"></script>
+    </body>
+    </html>

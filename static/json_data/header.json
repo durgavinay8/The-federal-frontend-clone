@@ -1,0 +1,40 @@
+{
+    "urls":{
+      "company_logo" : "../static/images/logo.svg",
+      "premium_icon_href": "https://thefederal.com/theme_flamingo/images/icon_header_premium.png",
+      "premium_href": "/pricing",
+      "register_href": "/login",
+      "menu":{
+        "home": "/",
+        "news": "/category/news/",
+        "analysis": "/category/analysis",
+        "state": "/category/states/",
+        "perspective": "/category/opinion/",
+        "videos": "/category/videos/",
+        "entertainment": "/category/entertainment/",
+        "sports": "/category/sports/",
+        "features": "/category/features/",
+        "business": "/category/business/",
+        "premium": "/category/the-eighth-column/"
+      }
+    },
+    "texts":{
+      "premium_normal" : "Premium Access",
+      "premium_on_hover" : "Only ₹599/year",
+      "register": "Register / Login",
+      "search_placeholder": "Search Website",
+      "menu":{
+        "home": "home",
+        "news": "news",
+        "analysis": "analysis",
+        "state": "state",
+        "perspective": "perspective",
+        "videos": "videos",
+        "entertainment": "entertainment",
+        "sports": "sports",
+        "features": "features",
+        "business": "business",
+        "premium": "premium"
+      }
+    }
+  }
