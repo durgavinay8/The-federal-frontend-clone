@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{article["title"]}}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style-article.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style-header-footer.css') }}">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    </head>
+    <body>
+        {% include 'header.html' %}
+        <main>
+            <div class="main-wrapper max-width">
+                <ol id="bread-crumb-wrapper" class="flex-row">
+                    {% for url, text in zip_lists(article["urls"]['breadcrumb_items'],
+                    article['texts']['breadcrumb_items']) %}
+                    <li class="bread-crumb-item">
+                        <a href="{{ url }}">{{ text }}</a>
+                    </li>
+                    <li>/</li>
+                    {% endfor %}
+                </ol>
+                <div id="main-body-wrapper"><!-- flex-row -->
+                    <div class="article-wrapper"><!-- flex-column -->
+                        <div class="article-header">
+                            <figure>
+                                <img
+                                    src="{{article['urls']['article_img_href']}}"
+                                    alt="article-image" class="article-img">
+                                <figcaption>{{article['texts']['image_context']}}</figcaption>
+                            </figure>
+                            <a href="{{article['urls']['category_href']}}"
+                                class="category-btn">{{article['texts']['category']}}</a>
+                            <h1 class="article-title">{{article['texts']['title']}}</h1>
+                            <h2 class="short-description">{{article['texts']['short_desc']}}</h2>
+                            <!-- <div class="read-time">{{article['texts']['read_time']}}</div> -->
+                            <div class="author-name">
+                                <a href="{{article['urls']['author_href']}}">
+                                    {{article['texts']['author_name']}}
+                                </a>
+                            </div>
+                            <div class="date-time-container">{{article['texts']['date_time']}}</div>
+                        </div>
+                        <div class="article-body">
+                            {% for text in article['texts']['para_text'] %}
+                            <p>{{text | safe}}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="all-tags-wrapper flex-row">
+                            {% for url, text in zip_lists(article['urls']['sub_categories_href'],
+                            article['texts']['sub_categories_text']) %}
+                                <a href="{{ url }}" class="category-btn">{{ text }}</a>
+                            {% endfor %}
+                        </div>
+                        <!-- <div > -->
+                            <a href="{{article['urls']['author_href']}}" class="flex-row" id="about-author-wrapper">
+                                <div>
+                                    <img src="{{article['urls']['article_img_href']}}"
+                                    alt="author-image" class="author-img">
+                                </div>
+                                <div class="author-details">
+                                    <p>About the Author</p>
+                                    <p class="author-name">{{article['texts']['author_name']}}</p>
+                                </div>
+                            </a>
+                        <!-- </div> -->
+                    </div>
+                    <!-- <div class="top-stories-wrapper flex-column"></div> -->
+                </div>
+            </div>
+        </main>
+        {% include 'footer.html' %}
+        <script src="{{ url_for('static', filename='js/script-article.js') }}"></script>
+    </body>
+</html>

@@ -11,11 +11,11 @@ soup = BeautifulSoup(req.content,"html.parser")
 language = ""
 data_to_be_fed={}
 level1={}
-translator = Translator()c
+translator = Translator()
 def tran(text):
   if language == "en":
       return text
-  for _ in range(3):
+  for i in range(3):
     try:
         return translator.translate(text, dest=language).text
     except:
@@ -336,5 +336,3 @@ def get_homepage_data(lang):
     # with open('data.json', 'w') as json_file:
     #     json_file.write(json_data)
     return data_to_be_fed
-
-print(get_homepage_data('te'))

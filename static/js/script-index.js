@@ -135,7 +135,7 @@ const renderMainSection = async(main_section)=>{
 
 const renderFooterSection = async(footer_data)=>{
   let footer_tag = document.querySelector('footer');
-  footer_tag.querySelector('.logo-img').src = footer_data.company_img_reverse;
+  footer_tag.querySelector('.logo-img').src = footer_data.urls.company_img_reverse_href;
   footer_tag.querySelector('.company-description').innerText = footer_data.texts.company_desc;
   let social_media_tags = footer_tag.querySelectorAll('.social-media-links a');
   let index=0;

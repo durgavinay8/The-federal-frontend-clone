@@ -1,3 +1,4 @@
+from flask import  url_for
 import json
 from googletrans import Translator
 
@@ -5,7 +6,16 @@ language = ""
 
 translator = Translator()
 def tran(text):
-  return (translator.translate(text, dest = language).text)
+  if language == "en":
+      return text
+  for i in range(3):
+    try:
+        return translator.translate(text, dest=language).text
+    except:
+        print("Translation request timed out. Retrying...")
+        continue
+  # a lot to-do
+  raise Exception("Translation request failed after multiple retries")
 
 header_json = {
   "urls":{
@@ -120,7 +130,14 @@ def update_texts(json_data):
         for key, value in json_data.items():
             if key == "texts" and isinstance(value, dict):
                 for text_key, text_value in value.items():
-                    json_data[key][text_key] = (tran(text_value))
+                    # if isinstance(text_value, list): 
+                    #   pass
+                    if isinstance(text_value, dict):
+                      for subkey, subvalue in text_value.items():
+                          json_data["texts"][text_key][subkey] = tran(subvalue)
+                    else:
+                      json_data[key][text_key] = tran(text_value)
+                break
             else:
                 update_texts(value)
     elif isinstance(json_data, list):
@@ -140,10 +157,8 @@ def get_header_footer_jsons(lang):
     updated_header_json = update_texts(header_json)
     updated_footer_json = update_texts(footer_json)
 
-   updated_header_json["urls"]["company_logo"] = f"../static/images/logo/{lang}.png"
-   updated_footer_json["urls"]["company_img_reverse_href"] = f"../static/images/logo_reverse/{lang}.png"
-   updated_footer_json["urls"]["premium_access_img_href"] = f"../static/images/premium_access_card/{lang}.png"
+   updated_header_json["urls"]["company_logo"] = url_for('static', filename=f'images/logo/{lang}.png')
+   updated_footer_json["urls"]["company_img_reverse_href"] = url_for('static', filename=f'images/logo_reverse/{lang}.png')
+   updated_footer_json["urls"]["premium_access_img_href"] = url_for('static', filename=f'images/premium_access_card/{lang}.png')
 
    return [updated_header_json, updated_footer_json]
-
-# print(get_header_footer_jsons("te"))

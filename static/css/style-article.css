@@ -1,0 +1,303 @@
+:root {
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    font-family: san-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+body{
+    background: #fff;
+    color: black;
+    font-size: 14px;
+    font-family: Roboto;
+    font-weight: 400;
+    line-height: 1.5;
+}
+.flex-row{
+    display: flex;
+    /* flex-wrap: wrap; */
+    gap: 20px;
+    justify-content: space-between;
+}
+.flex-column{
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    gap: 20px;
+    justify-content: space-between;
+}
+li{
+    list-style-type: none;
+}
+a{
+    color: #333;
+    text-decoration: none;
+}
+.max-width{
+    max-width: 1360px;
+    padding: 0 40px;
+    margin: auto;
+}
+/* header styling start */
+#header_row_1_sec{
+    padding: 5px 15px;
+}
+#header_top_right_sec_ul{
+    gap: 0;
+}
+#header_top_right_sec_ul li{
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 2px;
+    max-width: 150px;
+    height: 26.6px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    font-size: 13px;
+    overflow: hidden;
+}
+.premium_access_btn,
+.reg_login_btn,
+.search-input-container {
+    display: flex;
+    gap: 8px;
+    margin: 2px;
+    align-items: center;
+} 
+.search-input-container{
+    height: 25px !important;
+}
+.premium_icon,
+.header_userIcon{
+    width: 21px;
+    font-size: 21px;
+    aspect-ratio: 1/1 !important;
+}
+.header_searchIcon{
+    font-size: 14px;
+    margin-left: 4px;
+}
+#header_top_right_sec_ul li:first-child{
+    color: #520f0f;
+    background: #d7b763;
+}
+.reg_login_btn {
+    color: #4a4a4a;
+    background: #fff;   
+}
+.search-input-desktop{
+    outline: none;
+    border: none;
+    background: transparent;
+}
+/*mega-menu-wrapper start*/
+#mega-menu-wrapper{
+    background-color: #f6f6f6;
+    padding: 0 15px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+#mega-menu{
+    flex-wrap:wrap;
+    gap: 0px 28px;
+    justify-content: flex-start;
+    /* margin-left: 15px; */
+}
+#mega-menu li{
+    color: #520f0f;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 4px ;
+}
+/*mega-menu-wrapper end*/
+/* header styling end */
+
+/*main start*/
+#bread-crumb-wrapper{
+    justify-content: flex-start;
+    gap: 10px;
+    margin: 15px 0;
+}
+.article-img{
+    width: 75%;
+}
+.category-btn{
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: capitalize;
+    background: #d7b763;
+    color: #520f0f;
+    border-radius: 20px;
+    padding: 0 20px;
+    gap: 8px;
+    display: inline-flex;
+    justify-content: center;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    margin-top: 12px;
+}
+.article-title{
+    font-size: 45px;
+    line-height: 1.1;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin: 15px 0;
+}
+.short-description{
+    font-weight: 400;
+    font-family: Roboto Slab;
+    font-size: 30px;
+    line-height: 1.3;
+    margin: 15px 0;
+}
+.article-header .author-name{
+    font-size: 23px;
+    font-weight: 700;
+}
+.date-time-container{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.article-body p{
+    font-size: 20px;
+    word-break: break-word;
+    margin-bottom: 15px!important;
+    line-height: 1.4;
+}
+.all-tags-wrapper{
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+#about-author-wrapper{
+    padding: 10px;
+    border-bottom: 35px solid #d7b763;
+    margin-bottom: 20px;
+    background: #fffae4;
+    justify-content: flex-start;
+}
+#about-author-wrapper img{
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+#about-author-wrapper .author-name{
+    font-size: 22px;
+    color: #520f0f;
+    font-weight: 700;
+    line-height: 1.5;
+}
+/*main end*/
+
+/*footer start*/
+footer{
+    background-color: #171717;
+    color: white;
+    padding: 50px 0 0;
+}
+footer a{
+    color: white;
+}
+footer .logo-img{
+    width: 100px;
+}
+.footer-top .left{
+    max-width: 500px;
+}
+.social-media-links{
+    gap: 10px;
+    justify-content: flex-start;
+    margin: 0 0 20px;
+}
+.social-media-links a{
+    display: block;
+    width: 26px;
+    height: 26px;
+    font-size: 15px;
+    border: 2px solid #d7b763;
+    background: #d7b763;
+    color: #171717;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    text-align: center;
+}
+.company-description{
+    color: #ffffffe2;
+    font-size: 15px;
+    font-weight: 300;
+    margin: 15px 0 0;
+    line-height: 30px;
+}
+.company-links-list{
+    margin: 10px 0 20px;
+}
+.footer-top li{
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+.subscribe-container{
+    font-size: 15px;
+    font-weight: 500;
+}
+.subscribe-container .input-container{
+    justify-content: flex-start;
+    gap: 0;
+    height: 35px;
+    margin-top: 5px;
+}
+.subscribe-container input{
+    width: 300px;
+}
+.subscribe-container span{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #520f0f;
+    color: #d7b763;
+    font-size: 16px;
+    font-weight: 600;
+    min-width: 120px;
+    text-transform: uppercase;
+}
+.category-links-list p{
+    color: #fc9f00;
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 15px;
+}
+.footer-top .premium-access-img{
+    width: 300px;
+}
+
+.footer-bottom{
+    padding: 50px 0;
+    font-weight: 500;
+    text-align: center;
+}
+/*footer end*/
