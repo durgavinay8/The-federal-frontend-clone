@@ -19,8 +19,7 @@
         <main>
             <div class="main-wrapper max-width">
                 <ol id="bread-crumb-wrapper" class="flex-row">
-                    {% for url, text in zip_lists(article["urls"]['breadcrumb_items'],
-                    article['texts']['breadcrumb_items']) %}
+                    {% for url, text in zip_lists(article['urls']['breadcrumb_items'], article['texts']['breadcrumb_items']) %}
                     <li class="bread-crumb-item">
                         <a href="{{ url }}">{{ text }}</a>
                     </li>

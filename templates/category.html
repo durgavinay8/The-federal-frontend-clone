@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-category.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style-header-footer.css') }}">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    {% include 'header.html' %}
+    <main class="max-width">
+        <ol id="breadcrumb-wrapper" class="flex-row"></ol>
+        <template id="breadcrumb-item-template">
+            <li class="breadcrumb-item">
+                <a href=""></a>
+            </li>
+            <li>/</li>
+        </template>
+        <div id="main-body-wrapper">
+            <div id="category-text"></div>
+            <div class="level-1 flex-column" id="hero-section-container">
+                <div class="top-story flex-row" id="top-story">
+                    <div class="data-box">
+                        <a href class="title" id="top-story-title"></a>
+                        <a href="" class="author"></a>
+                        <a class="date-time"></a>
+                        <a href class="short-text"></a>
+                    </div>
+                    <div class="image-container">
+                        <a href class="image">
+                            <img src alt="top-story-image">
+                        </a>
+                        <a href class="img-over_tag_btn"></a>
+                    </div>
+                </div>
+                <div class="flex-row" id="sub-top-stories-row"></div>
+                <template id="sub-story-card-template">
+                    <div class="sub-story-card flex-column">
+                        <div class="image-container">
+                            <a href class="image">
+                                <img src alt="top-story-image">
+                            </a>
+                            <a href class="img-over_tag_btn flex-row"></a>
+                        </div>
+                        <div class="data-box">
+                            <a href class="title"></a>
+                            <a class="date-time"></a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div id="l1-l2-divider">
+                <hr class="hide">
+                <div class="flex-row" id="subcategory-list"></div>
+            </div>
+            <div class="flex-column" id="level-2"></div>
+            <template id="l2_subcard_template">
+                <a href class="article flex-column"
+                    id="l2_subcard">
+                    <img src alt="image" class="article-img">
+                    <div class="data-box">
+                        <p class="title"></p>
+                        <span class="date-time"></span>
+                    </div>
+                </a>
+            </template>
+            <template id="l2_maincard_template">
+                <div  class="article flex-column" id="l2_maincard">
+                    <a href="">
+                        <img src="" alt="article-image" class="article-img">
+                        <p class="title"></p>
+                    </a>
+                    <a href="" class="author"></a>
+                    <span class="date-time"></span>
+                    <a href="">
+                        <p class="para-text"></p>
+                    </a>
+                </div>
+            </template>
+            <div id="pagination" class="flex-row">
+                <a href="" id="prev"> &lt; Prev Page</a>
+                <a href="" id="next">Next Page&nbsp; &gt;</a>
+            </div>
+        </div>
+    </main>
+    {% include 'footer.html' %}
+    <script src="{{ url_for('static', filename='js/script-category.js') }}"></script>
+</body>
+</html>

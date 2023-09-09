@@ -2,7 +2,6 @@ let dataToBeRendered;
 
 //Fetching the data to be rendered when the html is loaded
 document.addEventListener("DOMContentLoaded", ()=>{
-  console.log("DOMContentLoaded");
   changeLanguage("null");
 });
 
@@ -18,40 +17,69 @@ const changeLanguage = async(langToBeSet)=>{
     return
   }
   if(language === "null"){
-    console.log("inside")
     langToBeSet = "en";
   }
   if(langToBeSet === "null"){
-    console.log("inside")
     langToBeSet = language;
   }
-  console.log("prevlanguage : ",typeof language,language,"& langToBeSet : ",typeof langToBeSet, langToBeSet);
+  document.cookie = 'language=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   document.cookie = `language=${langToBeSet}`;
-  renderPage(langToBeSet)
+  console.log("langToBeSet",langToBeSet);
+  fetchAndRenderLevels(langToBeSet);
 };
 
-const fetchHomepageData = async(language)=>{
-  try{
-    const response = await fetch(`api/homepage/${language}`)
+async function fetchAndRenderLevels(langToBeSet){
+  try {
+    const response = await fetch(`api/header-footer/${langToBeSet}`)
     if(!response.ok){
-      throw new Error('Network response was not ok');
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    return await response.json();
-  }catch(err){
+    const fetchedData = await response.json();
+    renderHeaderSection(fetchedData['header']);
+    renderFooterSection(fetchedData['footer']);
+  } catch (error) {
     alert("Error Fetching Data")
-    console.error("error fetching data\n",err);
+    console.error("error fetching data\n",error);
   }
-};
 
-const renderPage = async(language)=>{
-  try{
-    console.log("renderPage");
-    const dataToBeRendered = await fetchHomepageData(language);
-    renderHeaderSection(dataToBeRendered['header']);
-    renderMainSection(dataToBeRendered['main']);
-    renderFooterSection(dataToBeRendered['footer']);
-  }catch(err){
-    console.error('Error: ', err);
+  for(let i=1; i<10; i++){
+    if(i === 4) continue;
+    try {
+      const response = await fetch(`api/homepage/level${i}/${langToBeSet}`)
+      if(!response.ok){
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const fetchedData = await response.json();
+      switch (i){
+        case 1:
+          renderLevel1(fetchedData);
+          break;
+        case 2:
+          renderLevel2(fetchedData['level2']);
+          break;
+        case 3:
+          renderLevel3(fetchedData['level3']);
+          break;
+        case 5:
+          renderLevel5(fetchedData);
+          break;
+        case 6:
+          renderLevel6(fetchedData);
+          break;
+        case 7:
+          renderLevel7(fetchedData);
+          break;
+        case 8:
+          renderLevel8(fetchedData);
+          break;
+        case 9:
+          renderLevel9(fetchedData);
+          break;
+      }
+    } catch (error) {
+      alert("Error Fetching Data")
+      console.error("error fetching data\n",error);
+    }
   }
 }
 
@@ -69,68 +97,12 @@ const renderHeaderSection = async(header_Data)=>{
   header.querySelector('input').placeholder = header_Data.texts.search_placeholder;
   //mega-menu
   let mega_menu_ul = header.querySelector('#mega-menu');
-  mega_menu_ul.innerHTML = '';
-  for(each_menu in header_Data.urls.menu){
+  mega_menu_ul.innerHTML = '<li class="hamburger"><i class="fa-solid fa-bars"></i></li>';
+  for(each_menu in header_Data.menu.urls){
     let li_tag = document.createElement('li');
-    li_tag.innerHTML = `<a href="${header_Data.urls.menu[each_menu]}">${header_Data.texts.menu[each_menu]}</a>`;
+    li_tag.innerHTML = `<a href="${header_Data.menu.urls[each_menu]}">${header_Data.menu.texts[each_menu]}</a>`;
     mega_menu_ul.appendChild(li_tag);
   }
-}
-
-const renderMainSection = async(main_section)=>{
-  renderLevel1(main_section["level_1"]);
-  renderLevel2(main_section["level_2"]);
-  renderLevel3(main_section["level_3"]);
-  renderLevel5(main_section["level_5"]);
-  renderLevel6(main_section["level_6"]);
-  renderLevel7(main_section["level_7"]);
-  renderLevel8(main_section["level_8"]);
-  renderLevel9(main_section["level_9"]);
-
-  $(".level-2 .owl-carousel").owlCarousel({
-      margin:16,
-      nav : true,
-      loop : true,
-      navText: ['<span class="next">&lt;</span>','<span class="prev">&gt;</span>'],
-      navContainer: '.level-2 .custom-nav',
-      responsive:{
-          0:{
-              items:1
-          },
-          600:{
-              items:3
-          },
-          1000:{
-              items:4.5
-          }
-      }
-  })
-  $(".level-8 .owl-carousel").owlCarousel({
-      nav : true,
-      navText: ['<i class="fa-solid fa-caret-left"></i>','<i class="fa-solid fa-caret-right"></i>'],
-      responsive:{
-          1000:{
-              items:1
-          }
-      }
-  })
-  $(".level-9 .owl-carousel").owlCarousel({
-      margin:16,
-      nav : true,
-      navText: ['<span class="next">&lt;</span>','<span class="prev">&gt;</span>'],
-      navContainer: '.level-9 .custom-nav',
-      responsive:{
-          0:{
-              items:1
-          },
-          600:{
-              items:3
-          },
-          1000:{
-              items:4
-          }
-      }
-  })
 }
 
 const renderFooterSection = async(footer_data)=>{
@@ -143,6 +115,7 @@ const renderFooterSection = async(footer_data)=>{
     social_media_tags[index++].href = social_media;
   }
   let company_links_ul = footer_tag.querySelector('.company-links-list');
+  company_links_ul.innerHTML = ''
   for(x in footer_data.company_links.urls){
     let li_tag = document.createElement('li');
     li_tag.innerHTML = `<a href="${footer_data.company_links.urls[x]}">${footer_data.company_links.texts[x]}</a>`;
@@ -151,7 +124,7 @@ const renderFooterSection = async(footer_data)=>{
   footer_tag.querySelector('.subscribe-container p').innerText = footer_data.texts.subscribe_desc;
   footer_tag.querySelector('.subscribe-container span').innerText = footer_data.texts.subscribe_text;
   let category_links_ul = footer_tag.querySelector('.category-links-list');
-  category_links_ul.innerHTML = `<p>${footer_data.quick_links.section_title}</p>`;
+  category_links_ul.innerHTML = `<p>${footer_data.quick_links.texts.section_title}</p>`;
   for(x in footer_data.quick_links.urls){
     let li_tag = document.createElement('li');
     li_tag.innerHTML = `<a href="${footer_data.quick_links.urls[x]}">${footer_data.quick_links.texts[x]}</a>`;
@@ -178,7 +151,6 @@ const renderLevel1= async(level1_Data)=>{
   //sub-top-stories
   const sub_top_stories_container = document.getElementById('sub-top-stories-row');
   const substory_card_template = document.getElementById("sub-story-card-template");
-  print(substory_card_template)
 
   sub_top_stories_container.innerHTML = '';
   for(sub_story of level1_Data.top_story.sub_stories){
@@ -217,6 +189,11 @@ const renderLevel1= async(level1_Data)=>{
 const renderLevel2 = async(level2_Data)=>{
   const carousel_cont = document.getElementById('level2-carousel-cont');
   const card_template = document.getElementById('level2-card-template');
+  const owlCarousel = $(".level-2 .owl-carousel");
+  if (owlCarousel.data('owl.carousel')) {
+    owlCarousel.trigger('destroy.owl.carousel');
+  }
+
   carousel_cont.innerHTML = '';
   for(story of level2_Data){
     let card_clone = card_template.content.cloneNode(true);
@@ -231,23 +208,41 @@ const renderLevel2 = async(level2_Data)=>{
     
     carousel_cont.appendChild(card_clone);
   }
+  $(".level-2 .owl-carousel").owlCarousel({
+    margin:16,
+    nav : true,
+    loop : true,
+    navText: ['<span class="next">&lt;</span>','<span class="prev">&gt;</span>'],
+    navContainer: '.level-2 .custom-nav',
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:4.5
+        }
+    }
+  });
 }
 
 const renderLevel3 = async(level3_Data)=>{
-    //multiVideo_sec
-    const container = document.getElementById('multiVideo_sec');
-    const template = document.getElementById('multiVideo_box_template');
-    container.innerHTML = '';
-    for(video of level3_Data){
-        let video_card_clone = template.content.cloneNode(true);
-        let card_a_tag = video_card_clone.querySelector('a'); 
-        
-        card_a_tag.href = video.urls.article_href;
-        let img_p_tags = card_a_tag.children;
-        img_p_tags[0].src = video.urls.article_img_href;
-        img_p_tags[1].innerText = video.texts.para_text;
-        container.appendChild(video_card_clone);
-    }
+  //multiVideo_sec
+  const container = document.getElementById('multiVideo_sec');
+  const template = document.getElementById('multiVideo_box_template');
+  container.innerHTML = '';
+  for(video of level3_Data){
+      let video_card_clone = template.content.cloneNode(true);
+      let card_a_tag = video_card_clone.querySelector('a'); 
+      
+      card_a_tag.href = video.urls.article_href;
+      let img_p_tags = card_a_tag.children;
+      img_p_tags[0].src = video.urls.article_img_href;
+      img_p_tags[1].innerText = video.texts.para_text;
+      container.appendChild(video_card_clone);
+  }
 }
 
 const renderLevel5 = async(level5_Data)=>{
@@ -257,11 +252,15 @@ const renderLevel5 = async(level5_Data)=>{
     main_heading.href = level5_Data.section_href;
     //categories
     const places_ul = document.querySelector('.level-5 ul');
+    places_ul.innerHTML = ''
+    const language = getLanguageFromCookie
     for(category in level5_Data.categories){
-        let li_tag = document.createElement('li');
-        li_tag.innerText = category;
-        li_tag.className = 'category-based-on-place';
-        places_ul.appendChild(li_tag);
+      if(language != "en" && category=='All')
+        continue
+      let li_tag = document.createElement('li');
+      li_tag.innerText = category;
+      li_tag.className = 'category-based-on-place';
+      places_ul.appendChild(li_tag);
     }
     //article-cards
     let son_articles_cont = document.getElementById('state_of_nation_listBox_sec');
@@ -281,22 +280,26 @@ const renderLevel5 = async(level5_Data)=>{
 };
 
 const renderLevel6 = async(level6_Data)=>{
-    const opinion_container = document.getElementById('opinion-cards-cont');
-    const card_template = document.getElementById('opinion-card-template');
-    opinion_container.innerHTML = '';
-    for(opinion of level6_Data){
-        let card_clone = card_template.content.cloneNode(true);
-        let all_a_tags = card_clone.querySelectorAll('a');
+  const opinion_container = document.getElementById('opinion-cards-cont');
+  const card_template = document.getElementById('opinion-card-template');
+  opinion_container.innerHTML = '';
+  for(opinion of level6_Data['opinions']){
+    let card_clone = card_template.content.cloneNode(true);
+    let all_a_tags = card_clone.querySelectorAll('a');
 
-        all_a_tags[0].href = opinion.urls.author_profile_href;
-        all_a_tags[0].querySelector('img').src = opinion.urls.author_img_href;
-        all_a_tags[1].href = opinion.urls.article_href;
-        all_a_tags[1].innerText = opinion.texts.opinion_text;
-        all_a_tags[2].href = opinion.urls.author_profile_href;
-        all_a_tags[2].innerText = opinion.texts.author_name;
+    all_a_tags[0].href = opinion.urls.author_profile_href;
+    all_a_tags[0].querySelector('img').src = opinion.urls.author_img_href;
+    all_a_tags[1].href = opinion.urls.article_href;
+    all_a_tags[1].innerText = opinion.texts.opinion_text;
+    all_a_tags[2].href = opinion.urls.author_profile_href;
+    all_a_tags[2].innerText = opinion.texts.author_name;
 
-        opinion_container.appendChild(card_clone);
-    }
+    opinion_container.appendChild(card_clone);
+  }
+  const opinions_img = document.createElement('a');
+  opinions_img.href = level6_Data.urls.opinions_page_href;
+  opinions_img.innerHTML = `<img src="${level6_Data.urls.opinions_img_href}" alt="opinions page image">`
+  opinion_container.insertBefore(opinions_img, opinion_container.children[3]);
 }
 
 const renderLevel7 = async(level7_Data)=>{
@@ -333,18 +336,21 @@ const renderLevel8 = async(level8_Data)=>{
   let l8_container = document.querySelector('.level-8');
   const cat_box_template = document.getElementById('l8_category_box_template');
   const article_card_template = document.getElementById('l8_article_card_template');
-
+  const owlCarousel = $(".level-8 .owl-carousel");
+  if (owlCarousel.data('owl.carousel')) {
+    owlCarousel.trigger('destroy.owl.carousel');
+  }
   l8_container.innerHTML = '';
   for(category in level8_Data){
     let cat_box_clone = cat_box_template.content.cloneNode(true);
     //main-heading
     let heading_tag = cat_box_clone.querySelector('a');
-    heading_tag.href = `/${category}`;
-    heading_tag.innerText = category;
+    heading_tag.href = level8_Data[category].section_href;
+    heading_tag.innerText = level8_Data[category].section_title;
 
     //article-cards into carousel-card
     let carousel_card, index = 0;
-    for(article of level8_Data[category]){
+    for(article of level8_Data[category]['articles']){
       if(index%5 == 0){
         carousel_card = document.createElement('div');
         carousel_card.className = 'carousel-card flex-column';
@@ -361,6 +367,15 @@ const renderLevel8 = async(level8_Data)=>{
     }
     l8_container.appendChild(cat_box_clone);
   }
+  $(".level-8 .owl-carousel").owlCarousel({
+    nav : true,
+    navText: ['<i class="fa-solid fa-caret-left"></i>','<i class="fa-solid fa-caret-right"></i>'],
+    responsive:{
+        1000:{
+            items:1
+        }
+    }
+})
 }
 
 const renderLevel9 = async(level9_Data)=>{
@@ -370,6 +385,10 @@ const renderLevel9 = async(level9_Data)=>{
 
   let container = document.getElementById('federal-playlist-carousel-cont');
   const card_template = document.getElementById('federal-playlist-card-template');
+  const owlCarousel = $(".level-9 .owl-carousel");
+  if (owlCarousel.data('owl.carousel')) {
+    owlCarousel.trigger('destroy.owl.carousel');
+  }
   container.innerHTML = '';
   for(video of level9_Data.videos){
     let card_clone = card_template.content.cloneNode(true);
@@ -384,4 +403,21 @@ const renderLevel9 = async(level9_Data)=>{
     container.appendChild(card_clone);
   }
   document.querySelector('.level-9 .main-heading span').innerText = level9_Data.section_para_text;
+  $(".level-9 .owl-carousel").owlCarousel({
+    margin:16,
+    nav : true,
+    navText: ['<span class="next">&lt;</span>','<span class="prev">&gt;</span>'],
+    navContainer: '.level-9 .custom-nav',
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:4
+        }
+    }
+  })
 };

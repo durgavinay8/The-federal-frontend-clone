@@ -5,15 +5,15 @@ from googletrans import Translator
 language = ""
 
 translator = Translator()
-def tran(text):
+def translate_text(text):
   if language == "en":
-      return text
+    return text
   for i in range(3):
     try:
-        return translator.translate(text, dest=language).text
-    except:
-        print("Translation request timed out. Retrying...")
-        continue
+      return translator.translate(text, dest=language).text
+    except Exception as error:
+      print("Translation request timed out. Retrying...",error)
+      continue
   # a lot to-do
   raise Exception("Translation request failed after multiple retries")
 
@@ -23,7 +23,15 @@ header_json = {
     "premium_icon_href": "https://thefederal.com/theme_flamingo/images/icon_header_premium.png",
     "premium_href": "/pricing",
     "register_href": "/login",
-    "menu":{
+  },
+  "texts":{
+    "premium_normal" : "Premium Access",
+    "premium_on_hover" : "Only ₹599/year",
+    "register": "Register / Login",
+    "search_placeholder": "Search Website",
+  },
+  "menu":{
+     "urls":{
       "home": "/",
       "news": "/category/news/",
       "analysis": "/category/analysis",
@@ -35,14 +43,8 @@ header_json = {
       "features": "/category/features/",
       "business": "/category/business/",
       "premium": "/category/the-eighth-column/"
-    }
-  },
-  "texts":{
-    "premium_normal" : "Premium Access",
-    "premium_on_hover" : "Only ₹599/year",
-    "register": "Register / Login",
-    "search_placeholder": "Search Website",
-    "menu":{
+    },
+     "texts":{
       "home": "home",
       "news": "news",
       "analysis": "analysis",
@@ -95,7 +97,6 @@ footer_json = {
       }
     },
     "quick_links":{
-      "section_title" : "quick links",
       "urls":{
         "news": "/category/news/",
         "analysis": "/category/analysis",
@@ -110,6 +111,7 @@ footer_json = {
         "brand_studio": "/brand-studio"
       },
       "texts":{
+        "section_title" : "quick links",
         "news": "News",
         "analysis": "Analysis",
         "states": "States",
@@ -125,40 +127,32 @@ footer_json = {
     }
 }
 
-def update_texts(json_data):
-    if isinstance(json_data, dict):
-        for key, value in json_data.items():
+def update_texts(data):
+    if isinstance(data, dict):
+        new_data = {}
+        for key, value in data.items():
             if key == "texts" and isinstance(value, dict):
-                for text_key, text_value in value.items():
-                    # if isinstance(text_value, list): 
-                    #   pass
-                    if isinstance(text_value, dict):
-                      for subkey, subvalue in text_value.items():
-                          json_data["texts"][text_key][subkey] = tran(subvalue)
-                    else:
-                      json_data[key][text_key] = tran(text_value)
-                break
+                new_data[key] = {k: translate_text(v) for k, v in value.items()}
             else:
-                update_texts(value)
-    elif isinstance(json_data, list):
-        for i, item in enumerate(json_data):
-            json_data[i] = update_texts(item)
-    return json_data 
-
+                new_data[key] = update_texts(value)
+        return new_data
+    elif isinstance(data, list):
+        return [update_texts(item) for item in data]
+    else:
+        return data
 
 def get_header_footer_jsons(lang):
-   global language
-   language = lang
-   
-   if lang == "en":
+  global language
+  language = lang
+  
+  if lang == "en":
     updated_header_json = header_json
     updated_footer_json = footer_json
-   else:
+  else:
     updated_header_json = update_texts(header_json)
     updated_footer_json = update_texts(footer_json)
+  updated_header_json["urls"]["company_logo"] = url_for('static', filename=f'images/logo/{lang}.png')
+  updated_footer_json["urls"]["company_img_reverse_href"] = url_for('static', filename=f'images/logo_reverse/{lang}.png')
+  updated_footer_json["urls"]["premium_access_img_href"] = url_for('static', filename=f'images/premium_access_card/{lang}.png')
 
-   updated_header_json["urls"]["company_logo"] = url_for('static', filename=f'images/logo/{lang}.png')
-   updated_footer_json["urls"]["company_img_reverse_href"] = url_for('static', filename=f'images/logo_reverse/{lang}.png')
-   updated_footer_json["urls"]["premium_access_img_href"] = url_for('static', filename=f'images/premium_access_card/{lang}.png')
-
-   return [updated_header_json, updated_footer_json]
+  return [updated_header_json, updated_footer_json]
