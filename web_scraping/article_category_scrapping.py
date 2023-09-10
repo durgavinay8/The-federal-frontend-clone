@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import sys
 from googletrans import Translator
 import json
+import re
 
 language = ""
 translator = Translator()
@@ -171,21 +172,26 @@ def get_body_json_data(url, langToBeTranslated):
                 sub_categories_texts.append(translate_text(sub_category.text))
             data_to_be_sent['urls']['sub_categories'] = sub_categories_urls
             data_to_be_sent['texts']['sub_categories'] = sub_categories_texts
-
-        prev_next_pages = soup.select('.pagination > a')
-        if len(prev_next_pages)==1:
-            data_to_be_sent["urls"]["next_page"] = prev_next_pages[0]['href']
-            data_to_be_sent["texts"]["next_page"] = translate_text(prev_next_pages[0].text)
+        
+        url = "/category/"+url
+        if url[-1] == '/':
+            url = url[:-1] 
+        match = re.search(r'/(\d+)$', url)
+        if match:
+            number = int(match.group(1))
+            if match.group(1) != 1:
+                data_to_be_sent["urls"]["next_page"] = re.sub(r'/(\d+)$', '/' + str(number+1), url) 
+                data_to_be_sent["urls"]["prev_page"] = re.sub(r'/(\d+)$', '/' + str(number-1), url)
+                data_to_be_sent["texts"]["prev_page"] = translate_text('< Prev Page')
+            else:
+                data_to_be_sent["urls"]["next_page"] = url[:-1]+'2'
         else:
-            data_to_be_sent["urls"]["prev_page"] = prev_next_pages[0]['href']
-            data_to_be_sent["texts"]["prev_page"] = translate_text(prev_next_pages[0].text)
-            data_to_be_sent["urls"]["next_page"] = prev_next_pages[1]['href']
-            data_to_be_sent["texts"]["next_page"] = translate_text(prev_next_pages[1].text)
+            data_to_be_sent["urls"]["next_page"] = url+'/2'
+        data_to_be_sent["texts"]["next_page"] = translate_text('Next Page >')
 
     # json_data = json.dumps(data_to_be_sent, indent=4)
     # with open('data.json', 'w') as json_file:
     #     json_file.write(json_data)
     return [articleOrCategory,data_to_be_sent]
 
-# get_body_json_data('news','en')
 

@@ -78,12 +78,14 @@ const renderMainSection = async(main_section)=>{
   //level-2
   renderLevel2(main_section['level_2']);
   prev_next_pages = document.getElementById('pagination').children;
-  if(main_section['urls'].hasOwnProperty('prev_page_href')){
-      prev_next_pages[0].href = main_section['urls']['prev_page_href'];
+  if(main_section['urls'].hasOwnProperty('prev_page')){
+      prev_next_pages[0].href = main_section['urls']['prev_page'];
+      prev_next_pages[0].innerText = main_section['texts']['prev_page'];
   }else{
       prev_next_pages[0].classList = 'hide';
   }
-  prev_next_pages[1].href = main_section['urls']['next_page_href'];
+  prev_next_pages[1].href = main_section['urls']['next_page'];
+  prev_next_pages[1].innerText = main_section['texts']['next_page'];
 }
 
 const renderFooterSection = async(footer_data)=>{
